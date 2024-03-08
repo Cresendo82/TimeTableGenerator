@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="ANSI">
+    <title>2-4 시간표</title>
+	<style>
+		.container {
+			width: 20vw;
+			height: 100vh;
+			background: #6F6F6F;
+		}
+		body {
+			margin: 0;
+			background-color: #4F4F4F;
+			font-size: 14px;
+			font-family: 'Roboto', sans-serif;
+			display: flex;
+		}
+		.submit {
+			width: 90%;
+			height: 48px;
+			padding: 0 10px;
+			box-sizing: border-box;
+			margin-bottom: 16px;
+			margin-left: 5%;
+			border-radius: 0px;
+			background-color: #F8F8F8;
+			position: relative;
+			top: 40%;
+		}
+		.down {
+			width: 90%;
+			height: 48px;
+			padding: 0 10px;
+			box-sizing: border-box;
+			margin-bottom: 16px;
+			margin-left: 5%;
+			border-radius: 0px;
+			background-color: #F8F8F8;
+			position: relative;
+			top: 45%;
+		}
+		.imgcont {
+			position: relative;
+			width: 80vw;
+			height: 100vh;
+			margin-top: 5px;
+			margin-left: 50px;
+		}
+		.selector1 {
+			width: 100%;
+			height: 48px;
+			padding: 0 10px;
+			position: relative;
+			top: 30%;
+		}
+		.selector2 {
+			width: 100%;
+			height: 48px;
+			padding: 0 10px;
+			position: relative;
+			top: 23.5%;
+			left: 30%
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="selector1">
+			<div>과목 A</div>
+			<form>
+				<select id="subA">
+					<option value="문학">문학</option>
+					<option value="수II">수II</option>
+					<option value="영어I">영어I</option>
+					<option value="기하">기하</option>
+				</select>
+			</form>
+			<div>과목 B</div>
+			<form>
+				<select id="subB">
+					<option value="문학">문학</option>
+					<option value="수II">수II</option>
+					<option value="영어I">영어I</option>
+					<option value="기하">기하</option>
+				</select>
+			</form>
+			<div>과목 C</div>
+			<form>
+				<select id="subC">
+					<option value="문학">문학</option>
+					<option value="수II">수II</option>
+					<option value="영어I">영어I</option>
+					<option value="기하">기하</option>
+				</select>
+			</form>
+			<div>과목 D</div>
+			<form>
+				<select id="subD">
+					<option value="문학">문학</option>
+					<option value="수II">수II</option>
+					<option value="영어I">영어I</option>
+					<option value="경.수">경제수학</option>
+				</select>
+			</form>
+		</div>
+		<div class="selector2">
+			<div>음미체</div>
+			<form>
+				<select id="dac">
+					<option value=0>가</option>
+					<option value=1>나</option>
+					<option value=2>다</option>
+				</select>
+			</form>
+			<div>선택과목 A</div>
+			<form>
+				<select id="selA">
+					<option value="정.법">정치와법</option>
+					<option value="물I">물리학I</option>
+					<option value="화I">화학I</option>
+					<option value="생I">생명과학I</option>
+				</select>
+			</form>
+			<div>선택과목 B</div>
+			<form>
+				<select id="selB">
+					<option value="생.윤">생활과윤리</option>
+					<option value="물I">물리학I</option>
+					<option value="화I">화학I</option>
+					<option value="생I">생명과학I</option>
+					<option value="지I">지구과학I</option>
+				</select>
+			</form>
+			<div>증배</div>
+			<form>
+				<select id="wq">
+					<option value="인공지능">인공지능 기초</option>
+					<option value="국제경제">국제경제</option>
+					<option value="자습">없음</option>
+				</select>
+			</form>
+		</div>
+		<button class="submit" onclick="smbutton()" id="submit">만들기</button>
+		<button class="down">캡처하여 사용하세요</button>
+	</div>
+	<div class="imgcont">
+		<canvas id="timetable" width="500" height="707">
+		</canvas>
+	</div>
+</body>
+
+<script>
+	var canvas = document.querySelector('canvas');
+	var ctx = canvas.getContext('2d');
+
+	var img = new Image();
+
+	img.onload = () => {
+		ctx.drawImage(img,0,0)
+	};
+
+	img.src = 'tt.png'
+
+	function smbutton() {
+		var subA = document.getElementById('subA').options[document.getElementById('subA').selectedIndex].value;
+		var subB = document.getElementById('subB').options[document.getElementById('subB').selectedIndex].value;
+		var subC = document.getElementById('subC').options[document.getElementById('subC').selectedIndex].value;
+		var subD = document.getElementById('subD').options[document.getElementById('subD').selectedIndex].value;
+
+		var dac = document.getElementById('dac').options[document.getElementById('dac').selectedIndex].value;
+		var selA = document.getElementById('selA').options[document.getElementById('selA').selectedIndex].value;
+		var selB = document.getElementById('selB').options[document.getElementById('selB').selectedIndex].value;
+		var wq = document.getElementById('wq').options[document.getElementById('wq').selectedIndex].value;
+
+		var remain = [["체육","미술","한국사","음악","한국사","체육"],["한국사","체육","미술","체육","음악","한국사"],["미술","한국사","체육","한국사","체육","음악"]];
+
+		var vari = 1;
+
+		ctx.fillText("학급활동", 115, 185)
+		ctx.fillText(subA, 115, 241)
+		ctx.fillText(subA, 115, 297)
+		ctx.fillText(subB, 115, 353)
+		ctx.fillText(subB, 115, 409)
+		ctx.fillText(remain[dac][0], 115, 465)
+		ctx.fillText(remain[dac][1], 115, 521)
+		ctx.fillText("학술진로", 115, 577)
+		ctx.fillText("동아리", 115, 633)
+
+		ctx.fillText(selB, 115+60*vari, 185)
+		ctx.fillText(selB, 115+60*vari, 241)
+		ctx.fillText(subC, 115+60*vari, 297)
+		ctx.fillText(subC, 115+60*vari, 353)
+		ctx.fillText(remain[dac][2], 115+60*vari, 409)
+		ctx.fillText(subD, 115+60*vari, 465)
+		ctx.fillText(subD, 115+60*vari, 521)
+		ctx.fillText("1인1기", 115+60*vari, 577)
+		ctx.fillText("동아리", 115+60*vari, 633)
+		vari += 1;
+
+		ctx.fillText(selA, 115+60*vari, 185)
+		ctx.fillText(selA, 115+60*vari, 241)
+		ctx.fillText(subA, 115+60*vari, 297)
+		ctx.fillText(subA, 115+60*vari, 353)
+		ctx.fillText(subB, 115+60*vari, 409)
+		ctx.fillText(subB, 115+60*vari, 465)
+		ctx.fillText("방과후", 115+60*vari, 521)
+		ctx.fillText("방과후", 115+60*vari, 577)
+		ctx.fillText("방과후", 115+60*vari, 633)
+		vari += 1;
+
+		ctx.fillText(subC, 115+60*vari, 185)
+		ctx.fillText(subC, 115+60*vari, 241)
+		ctx.fillText(selA, 115+60*vari, 297)
+		ctx.fillText(selA, 115+60*vari, 353)
+		ctx.fillText(subD, 115+60*vari, 409)
+		ctx.fillText(subD, 115+60*vari, 465)
+		ctx.fillText(wq, 115+60*vari, 521)
+		ctx.fillText(wq, 115+60*vari, 577)
+		ctx.fillText(wq, 115+60*vari, 633)
+		vari += 1;
+		
+		ctx.fillText(selB, 115+60*vari, 185)
+		ctx.fillText(selB, 115+60*vari, 241)
+		ctx.fillText(remain[dac][3], 115+60*vari, 297)
+		ctx.fillText(remain[dac][4], 115+60*vari, 353)
+		ctx.fillText(remain[dac][5], 115+60*vari, 409)
+		ctx.fillText("독서토론", 115+60*vari, 465)
+		ctx.fillText("독서토론", 115+60*vari, 521)
+		ctx.fillText("자율", 115+60*vari, 577)
+		ctx.fillText("자율", 115+60*vari, 633)
+		vari = 0;
+	}
+
+</script>
+</html>
